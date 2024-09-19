@@ -1,0 +1,4 @@
+<td><%= borrow.book.title %></td>
+<td><%= borrow.book.author %></td>
+<td><%= borrow.due_date %></td>
+<td><%= (Date.today - borrow.due_date).to_i > 15 ? 'Yes' : 'No' %></td>

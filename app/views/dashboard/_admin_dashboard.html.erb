@@ -1,0 +1,73 @@
+<h1>Dashboard</h1>
+
+<h2>Total books: <%= @total_books %></h2>
+<h2>Total borrowed books: <%= @total_borrowed_books %></h2>
+<h2>Books due today:</h2>
+<div id="due_today" class="wrapper">
+  <table>
+    <thead>
+      <tr class="header">
+        <th>Title</th>
+        <th>Author</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books_due_today.each do |borrow| %>
+        <tr>
+          <td><%= borrow.book.title %></td>
+          <td><%= borrow.book.author %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<h2>Members overdue:</h2>
+<div id="members_overdue" class="wrapper">
+  <table>
+    <thead>
+      <tr class="header">
+        <th>Member ID</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @members_with_overdue_books.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<h2>List of borrowed books:</h2>
+<div id="borrowed_list" class="wrapper">
+  <table>
+    <thead>
+      <tr class="header">
+        <th>Title</th>
+        <th>Author</th>
+        <th>Member ID</th>
+        <th>Email</th>
+        <th>Due Date</th>
+        <th>Return</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @borrowed_books_by_due_date.each do |borrow| %>
+        <tr>
+          <td><%= borrow.book.title %></td>
+          <td><%= borrow.book.author %></td>
+          <td><%= borrow.user.id %></td>
+          <td><%= borrow.user.email %></td>
+          <td><%= borrow.due_date %></td>
+          <td>
+            <%= button_to "Return", borrow_path(borrow),
+                          method: :delete,
+                          class: "btn-red" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

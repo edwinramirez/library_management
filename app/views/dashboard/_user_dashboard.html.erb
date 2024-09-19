@@ -1,0 +1,22 @@
+<h1>Dashboard</h1>
+
+<% if @borrows_with_books.size > 0 %>
+<h2>Your borrowed books</h2>
+  <div id="borrows" class="wrapper">
+    <table>
+      <thead>
+      <tr class="header">
+        <th>Title</th>
+        <th>Author</th>
+        <th>Due Date</th>
+        <th>Overdue?</th>
+      </tr>
+      </thead>
+      <% @borrows_with_books.each do |borrow| %>
+        <tr id="<%= dom_id borrow %>">
+          <%= render partial: 'borrow', locals: {borrow: borrow} %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>

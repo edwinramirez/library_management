@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+<%= link_to "Check out our books", books_path, class: 'btn-green' %>
+
+<% if current_user %>
+  <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: "delete" }, class:
+    'btn-purple' %>
+<% else %>
+  <%= link_to "Login", new_user_session_path, class: 'btn-purple' %>
+  <%= link_to "Register", new_user_registration_path, class: 'btn-purple' %>
+<% end %>
+
+<% if current_user && !current_user.admin? %>
+  <%= render partial: 'user_dashboard', locals: {borrows_with_books: @borrows_with_books} %>
+<% elsif current_user&.admin? %>
+  <%= render partial: 'admin_dashboard', locals: {
+    total_books: @total_books,
+    total_borrowed_books: @total_borrowed_books,
+    books_due_today: @books_due_today,
+    members_with_overdue_books: @members_with_overdue_books,
+    borrowed_books_by_due_date: @borrowed_books_by_due_date
+  } %>
+<% else %>
+  <h1>Welcome to the Library</h1>
+<% end %>

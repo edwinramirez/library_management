@@ -1,0 +1,26 @@
+<p style="color: green"><%= notice %></p>
+
+<div id="books" class="wrapper">
+  <table>
+    <thead>
+    <tr class="header">
+      <th class="th">Title</th>
+      <th class="th">Author</th>
+      <th class="th">Genre</th>
+      <th class="th">ISBN</th>
+      <th class="th">Copies</th>
+    </tr>
+    </thead>
+    <%= render @book %>
+  </table>
+</div>
+
+<div class="margin-bottom-5">
+  <%= link_to "Edit", edit_book_path(@book), class: 'btn-blue' %>
+</div>
+<div class="margin-bottom-5">
+  <%= link_to "Back", books_path, class: 'btn-green' %>
+</div>
+<div class="margin-bottom-5">
+  <%= button_to "Destroy", @book, method: :delete, class: 'btn-red' %>
+</div>

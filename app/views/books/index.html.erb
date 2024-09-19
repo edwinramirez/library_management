@@ -1,0 +1,51 @@
+<% if current_user %>
+  <%= link_to "Dashboard", root_path, class: 'btn-purple' %>
+  <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: "delete" }, class: 'btn-red' %>
+<% end %>
+<p style="color: green"><%= notice %></p>
+
+<h1>Books</h1>
+<%= link_to "New book", new_book_path, class: 'btn-blue margin-bottom-7' %>
+
+<%= form_with url: books_path, method: :get, local: true do %>
+  <div class="field margin-bottom-7">
+    <%= label_tag :search, "Search by title, author, or genre:" %>
+    <%= text_field_tag :query, params[:query], class: 'form-input' %>
+    <%= submit_tag "Search", class: 'btn-green' %>
+  </div>
+<% end %>
+
+<div id="books" class="wrapper">
+  <table>
+    <thead>
+      <tr class="header">
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>ISBN</th>
+        <th>Copies</th>
+        <th></th>
+      </tr>
+    </thead>
+    <% @books.each do |book| %>
+      <tr id="<%= dom_id book %>">
+        <%= render book %>
+        <td data-controller="borrows">
+          <%= link_to "View", book, class: 'btn-green'%>
+          <% if current_user && !current_user.admin? %>
+            <%= form_with(model: @borrow) do |form| %>
+              <%= form.submit "Borrow",
+                              data: {
+                                book_id: book.id,
+                                user_id: current_user.id,
+                                action: "borrows#create"
+                              },
+                              class: 'btn-purple'
+              %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
